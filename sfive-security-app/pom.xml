@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+ <modelVersion>4.0.0</modelVersion>
+ <parent>
+  <groupId>com.sfive.security</groupId>
+  <artifactId>sfive-security-parent</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+ </parent>
+ <artifactId>sfive-security-app</artifactId>
+ <packaging>ear</packaging>
+ <name>SFive Security Application</name>
+ <build>
+  <plugins>
+   <plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+     <source>1.5</source>
+     <target>1.5</target>
+    </configuration>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-ear-plugin</artifactId>
+    <configuration>
+     <displayName>SFive Security application</displayName>
+     <description>Sfive Security EAR</description>
+     <version>5</version>
+     <modules>
+      <jarModule>
+       <groupId>${project.groupId}</groupId>
+       <artifactId>sfive-security-model</artifactId>
+      </jarModule>
+     </modules>
+    </configuration>
+   </plugin>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>wagon-maven-plugin</artifactId>
+    <executions>
+     <execution>
+      <id>copy-ear</id>
+      <phase>deploy</phase>
+      <goals>
+       <goal>upload</goal>
+      </goals>
+      <configuration>
+       <fromDir>target</fromDir>
+       <includes>${artifactId}-${version}.ear</includes>
+       <excludes>pom.xml</excludes>
+       <url>file:${stageEnvUrl1}</url>
+      </configuration>
+     </execution>
+    </executions>
+   </plugin>
+  </plugins>
+</build>
+ <dependencies>
+  <dependency>
+   <type>jar</type>
+   <groupId>${project.groupId}</groupId>
+   <artifactId>sfive-security-model</artifactId>
+   <version>${project.version}</version>
+  </dependency>
+ </dependencies>
+</project>
